@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%p [%t] %c{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- Start: Added by wx Ver0.0.1. -->
+    <appender name="RFILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="target/${pom.name}.log"/>
+        <param name="append" value="true"/>
+        <param name="MaxFileSize" value="1MB"/>
+        <param name="MaxBackupIndex" value="10"/>
+        <param name="encoding" value="UTF-8"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%t] %c{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>
+    <!-- End: Added by wx Ver0.0.1. -->
+
+    <logger name="net.sf.ehcache">
+        <level value="ERROR"/>
+    </logger>
+
+    <!-- Suppress success logging from InteractiveAuthenticationSuccessEvent -->
+    <logger name="org.springframework.security">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.apache">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="org.apache.velocity">
+        <level value="FATAL"/>
+    </logger>
+
+    <!-- Suppress invalid warning messages from JSF -->
+    <logger name="org.apache.myfaces">
+        <level value="ERROR"/>
+    </logger>
+
+    <!-- Suppress warnings from Struts -->
+    <logger name="org.apache.struts2.util.TextProviderHelper">
+      <level value="ERROR"/>
+    </logger>
+
+    <logger name="com.opensymphony.xwork2.util.OgnlUtil">
+       <level value="ERROR"/>
+    </logger>
+
+    <logger name="com.opensymphony.xwork2.ognl.OgnlValueStack">
+       <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.dbunit">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="org.hibernate">
+        <level value="WARN"/>
+    </logger>
+  
+    <!--logger name="org.hibernate.SQL">
+        <level value="DEBUG"/>
+    </logger-->
+
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>
+   
+    <logger name="com.xj">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="com.xj.tool">
+        <level value="INFO"/>
+    </logger>
+
+    <root>
+        <level value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="RFILE"/> <!-- Added by wx Ver0.0.1. -->
+    </root>
+
+</log4j:configuration>

@@ -1,0 +1,56 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+    "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+    <field name="demo.name">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+        <field-validator type="stringlength">
+            <param name="maxLength">50</param>
+            <param name="trim">true</param>
+            <message key="errors.maxlength"/>
+        </field-validator>
+    </field>
+    <field name="demo.price">
+        <field-validator type="double">
+            <param name="minInclusive">0.0</param>
+            <param name="maxInclusive">999999.99</param>
+            <message key="errors.rangeDouble"/>
+        </field-validator>
+    </field>
+    <field name="demo.qty">
+        <field-validator type="long">
+            <param name="min">-999999</param>
+            <param name="max">999999</param>
+            <message key="errors.rangeLong"/>
+        </field-validator>
+    </field>
+    <field name="demo.total">
+        <field-validator type="double">
+            <param name="minInclusive">-9999999999999.99</param>
+            <param name="maxInclusive">9999999999999.99</param>
+            <message key="errors.rangeDouble"/>
+        </field-validator>
+    </field>
+    <field name="demo.discountRate">
+        <field-validator type="double">
+            <param name="minInclusive">0.0</param>
+            <param name="maxInclusive">1.0</param>
+            <message key="errors.rangePercent"/>
+        </field-validator>
+    </field>
+    <field name="demo.percent">
+        <field-validator type="double">
+            <param name="minInclusive">-99.9999</param>
+            <param name="maxInclusive">99.9999</param>
+            <message key="errors.rangePercent"/>
+        </field-validator>
+    </field>
+    <field name="demo.description">
+        <field-validator type="stringlength">
+            <param name="maxLength">200</param>
+            <param name="trim">true</param>
+            <message key="errors.maxlength"/>
+        </field-validator>
+    </field>
+</validators> 

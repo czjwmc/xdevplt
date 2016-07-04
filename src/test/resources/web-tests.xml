@@ -1,0 +1,984 @@
+<!DOCTYPE project [
+    <!ENTITY config SYSTEM "./config.xmlf">
+    <!ENTITY login SYSTEM "./login.xmlf">
+]>
+<project basedir="." default="run-all-tests">
+    <taskdef resource="webtestTaskdefs.properties" />
+
+    <!-- Use i18n bundle, 2nd one listed is the default -->
+    <property file="../../../target/classes/ApplicationResources_${user.language}.properties"/>
+    <property file="../../../target/classes/ApplicationResources.properties"/>
+    <property file="../../../target/classes/displaytag_${user.language}.properties"/>
+    <property file="../../../target/classes/displaytag.properties"/>
+
+    <!-- runs all targets -->
+    <target name="run-all-tests" 
+        depends="Login,Logout,PasswordHint,Signup,UserTests,StaticPages,WebServices,DWR,FileUpload,XdpDocTypeTests,XdpGroupDocTests,XdpGroupDocTypeTests,XdpProcessTests,XdpSystemTests,XdpGroupTests"
+        description="Call and executes all test cases (targets)"/>
+    
+    <!-- runs user-related tests -->
+    <target name="UserTests" depends="EditUser,SearchUser,SaveUser,AddUser,ActiveUsers"
+        description="Call and executes all user test cases (targets)">
+        <echo>Successfully ran all User UI tests!</echo>
+    </target>
+    
+    <!-- Login to the application -->
+    <target name="Login" description="Runs login test and verifies Main Menu's Title">
+        <webtest name="login">
+            &config;
+            <steps>
+                &login;
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Logout of the application -->
+    <target name="Logout" description="Runs logout test and verifies Login's Title">
+        <webtest name="logout">
+            &config;
+            <steps>
+                &login;
+                <invoke description="get Logout Page" url="/logout"/>
+                <verifytitle description="we should see the login title" text=".*${login.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Retrieve Password Hint -->
+    <target name="PasswordHint" description="Gets the user's password hint">
+        <webtest name="passwordHint">
+            &config;
+            <steps>
+                <invoke description="get Login Page" url="/"/>
+                <verifytitle description="we should see the login title" text=".*${login.title}.*" regex="true"/>
+                <invoke description="click password hint link" url="/passwordHint?username=admin"/>
+                <verifytitle description="show login title again" text=".*${login.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+    
+    <target name="StaticPages" description="Ensures that StaticFilter is working">
+        <webtest name="staticPages">
+            &config;
+            <steps>
+                &login;
+                <invoke description="go to static HTML page" url="/scripts/dojo/test.html"/>
+                <verifytitle description="we should see static title" text="Static HTML Page" regex="true"/>
+                <verifytext description="verify message" text="Static content!"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify the edit user screen displays without errors -->
+    <target name="EditUser" description="Tests selecting the 'Edit Profile' forward">
+        <webtest name="editUser">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit Profile link" url="/editProfile"/>
+                <verifytitle description="we should see the user profile title"
+                    text=".*${userProfile.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+    
+    <!-- Verify the user list screen displays without errors -->
+    <target name="SearchUser" description="Tests search for and displaying all users">
+        <webtest name="searchUser">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click View Users link" url="/admin/users"/>
+                <verifytitle description="we should see the user list title" 
+                    text=".*${userList.title}.*" regex="true"/>
+                <setinputfield description="set search term" name="q" value="tomcat"/>
+                <clickbutton label="${button.search}" description="Click Search"/>
+                <verifyXPath
+                     description="Count the number of users found"
+                     xpath="count(//table[@id='users']/tbody/tr)"
+                     text="1"/>
+            </steps>
+        </webtest>
+    </target>
+    
+    <!-- Edit a user and then save -->
+    <target name="SaveUser" description="Tests editing and saving a user">
+        <webtest name="saveUser">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit Profile link" url="/editProfile"/>
+                <verifytitle description="we should see the user profile title" 
+                    text=".*${userProfile.title}.*" regex="true"/>
+                <setinputfield description="set address" name="user.address.address" value="2255 Lane Avenue"/>
+                <setinputfield description="set zipcode" name="user.address.postalCode" value="59826"/>
+                <clickbutton label="${button.save}" description="Click Save"/>
+                <verifytitle description="display Main Menu if save OK" text=".*${mainMenu.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+    
+    <!-- Add a new user after logging in -->
+    <target name="AddUser" description="Adds a new user profile">
+        <webtest name="addUser">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Add Button" url="/editUser?from=list"/>
+                <verifytitle description="view the user profile title"
+                    text=".*${userProfile.title}.*" regex="true"/>
+                    
+                <setinputfield description="set username" name="user.username" value="newuser"/>
+                <setinputfield description="set password" name="user.password" value="test"/>
+                <setinputfield description="set confirmPassword" name="user.confirmPassword" value="test"/>
+                <setinputfield description="set firstName" name="user.firstName" value="Test"/>
+                <setinputfield description="set lastName" name="user.lastName" value="Name"/>
+                <setinputfield description="set city" name="user.address.city" value="Denver"/>
+                <setinputfield description="select province" name="user.address.province" value="CO"/>
+                <setselectfield description="select country" name="user.address.country" value="US"/>
+                <setinputfield description="set postalCode" name="user.address.postalCode" value="80210"/>
+                <setinputfield description="set email" name="user.email" value="newuser@xujis.com"/>
+                <setinputfield description="set website" name="user.website" value="http://www.xujis.com"/>
+                <setinputfield description="set passwordHint" name="user.passwordHint" value="test"/>
+                <setselectfield description="Select roles" name="userRoles" value="ROLE_USER"/>
+                <clickbutton label="${button.save}" description="Click button 'Save'"/>
+
+                <verifytitle description="view user list screen" text=".*${userList.title}.*" regex="true"/>
+                <verifytext description="verify success message" regex="true"
+                    text='&lt;div class="alert alert-success.*&gt;.*Test Name.*&lt;/div&gt;'/>
+                    
+                <!-- Delete user -->
+                <clickLink description="Click edit user link" label="newuser"/>
+                <enableJavaScript enable="false"/>
+                <!--prepareDialogResponse description="Confirm delete" dialogType="confirm" response="true"/-->
+                <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+                <!--verifyNoDialogResponses/-->
+                <verifytext description="verify success message" regex="true"
+                    text='&lt;div class="alert alert-success.*&gt;.*Test Name.*&lt;/div&gt;'/>
+                <verifytitle description="display user list" text=".*${userList.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+    
+    <!-- Sign up a new user (no login) -->
+    <target name="Signup" description="Signup a new user">
+        <webtest name="signup">
+            &config;
+            <steps>
+                <invoke description="click signup link" url="/signup"/>
+                <verifytitle description="view signup title" text=".*${signup.title}.*" regex="true"/>
+                    
+                <setinputfield description="set username" name="user.username" value="signup-user"/>
+                <setinputfield description="set password" name="user.password" value="test"/>
+                <setinputfield description="set confirmPassword" name="user.confirmPassword" value="test"/>
+                <setinputfield description="set firstName" name="user.firstName" value="Test"/>
+                <setinputfield description="set lastName" name="user.lastName" value="Name"/>
+                <setinputfield description="set city" name="user.address.city" value="Denver"/>
+                <setinputfield description="set state" name="user.address.province" value="CO"/>
+                <setselectfield description="select country" name="user.address.country" value="US"/>
+                <setinputfield description="set postalCode" name="user.address.postalCode" value="80210"/>
+                <setinputfield description="set email" name="user.email" value="signup-user@xujis.com"/>
+                <setinputfield description="set website" name="user.website" value="http://www.xujis.com"/>
+                <setinputfield description="set passwordHint" name="user.passwordHint" value="test"/>
+                
+                <enableJavaScript enable="false"/> <!-- HtmlUnit doesn't understand table.rows.length -->
+                <clickbutton label="${button.register}"  description="Click button 'Signup'"/>
+                
+                <verifytitle description="view main menu" text=".*${mainMenu.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${user.registered}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- View Active Users -->
+    <target name="ActiveUsers" description="View Active Users List">
+        <webtest name="activeUsers">
+            &config;
+            <steps>
+                &login;
+                <invoke description="get activeUsers URL" url="/admin/activeUsers"/>
+                <verifytitle description="we should see the activeUsers title" 
+                    text=".*${activeUsers.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+    
+    <!-- File Upload -->
+    <target name="FileUpload" description="Tests uploading a file">
+        <webtest name="fileUpload">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Upload a File link" url="/uploadFile"/>
+                <verifytitle description="should see file upload form" text=".*${upload.title}.*" regex="true"/>
+                <setinputfield description="set name" name="name" value="Canoo Test File"/>
+                <setFileField description="set file" name="file" fileName="web-tests.xml"/>
+                <clickbutton label="${button.upload}" description="Click Upload"/>
+                <verifytitle description="show file data if upload OK" text=".*${display.title}.*" regex="true"/>
+                <verifytext description="verify original filename displayed on page" text="web-tests.xml"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify CXF is configured properly. -->
+    <target name="WebServices" description="Verifies CXF Services are listed">
+        <webtest name="webservices">
+            &config;
+            <steps>
+                &login;
+                <invoke url="/services/"/>
+                <verifytitle description="should see services listing" text="CXF - Service list.*" regex="true"/>
+                <verifytext description="verify page renders" text="Available SOAP services"/>
+                <verifytext description="verify UserManager exist" text="UserService"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify DWR is configured properly. -->
+    <target name="DWR" description="Verifies DWR Index Page">
+        <webtest name="dwr">
+            &config;
+            <steps>
+                &login;
+                <invoke url="/dwr/"/>
+                <verifytitle description="should DWR Test Index" text="DWR Test Index.*" regex="true"/>
+                <clicklink description="click on UserManager link" label="UserManager"/>
+                <verifytext description="verify next page comes up" text="Methods For: UserManager"/>
+            </steps>
+        </webtest>
+    </target>
+    <!--Demo-START-->
+    <!-- runs demo-related tests -->
+    <target name="DemoTests" depends="SearchDemoes,EditDemo,SaveDemo,AddDemo,DeleteDemo"
+            description="Call and executes all demo test cases (targets)">
+        <echo>Successfully ran all Demo UI tests!</echo>
+    </target>
+
+    <!-- Verify the demoes list screen displays without errors -->
+    <target name="SearchDemoes" description="Tests search for and displaying all demoes">
+        <webtest name="searchDemoes">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click View Demo link" url="/demoes"/>
+                <verifytitle description="we should see the demoList title"
+                             text=".*${demoList.title}.*" regex="true"/>
+                <setinputfield description="set search term" name="q" value="*"/>
+                <clickbutton label="${button.search}" description="Click Search"/>
+                <verifytitle description="we should see the demoList title"
+                             text=".*${demoList.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify the edit demo screen displays without errors -->
+    <target name="EditDemo" description="Tests editing an existing Demo's information">
+        <webtest name="editDemo">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit Demo link" url="/editDemo?id=-1"/>
+                <verifytitle description="we should see the demoDetail title"
+                             text=".*${demoDetail.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Edit a demo and then save -->
+    <target name="SaveDemo" description="Tests editing and saving a demo">
+        <webtest name="saveDemo">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit Demo link" url="/editDemo?id=-1"/>
+                <verifytitle description="we should see the demoDetail title"
+                             text=".*${demoDetail.title}.*" regex="true"/>
+
+                <!-- update some of the required fields -->
+                <setInputField description="set createDate" name="demo.createDate" value="12/06/2012"/>
+                <setCheckbox description="set enabled" name="demo.enabled" value="true"/>
+                <setInputField description="set name" name="demo.name" value="NyLcZxYnBiQpUzIwCiEyXtYrLrHqDpOdGgMyNiFkVsIoDePjMz"/>
+                <setInputField description="set updateDate" name="demo.updateDate" value="12/06/2012"/>
+
+                <clickbutton label="${button.save}" description="Click Save"/>
+                <verifytitle description="Page re-appears if save successful"
+                             text=".*${demoDetail.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${demo.updated}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Add a new Demo -->
+    <target name="AddDemo" description="Adds a new Demo">
+        <webtest name="addDemo">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Add Button" url="/editDemo"/>
+                <verifytitle description="we should see the demoDetail title"
+                             text=".*${demoDetail.title}.*" regex="true"/>
+
+                <!-- enter required fields -->
+                <setInputField description="set createDate" name="demo.createDate" value="12/06/2012"/>
+                <setCheckbox description="set enabled" name="demo.enabled" value="true"/>
+                <setInputField description="set name" name="demo.name" value="KqXxPnCeIhVpZkBrPsGmXyBvEyGxBwHtExGdAhSrIpJyTzOcUn"/>
+                <setInputField description="set updateDate" name="demo.updateDate" value="12/06/2012"/>
+
+                <clickbutton label="${button.save}" description="Click button 'Save'"/>
+                <verifytitle description="Demo List appears if save successful"
+                             text=".*${demoList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${demo.added}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Delete existing demo -->
+    <target name="DeleteDemo" description="Deletes existing Demo">
+        <webtest name="deleteDemo">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit Demo link" url="/editDemo?id=-1"/>
+                <prepareDialogResponse description="Confirm delete" dialogType="confirm" response="true"/>
+                <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+                <verifyNoDialogResponses/>
+                <verifytitle description="display Demo List" text=".*${demoList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${demo.deleted}"/>
+            </steps>
+        </webtest>
+    </target>
+    <!--Demo-END-->
+    <!--XdpGroup-START-->
+    <!-- runs xdpGroup-related tests -->
+    <target name="XdpGroupTests" depends="SearchXdpGroups,EditXdpGroup,SaveXdpGroup,AddXdpGroup,DeleteXdpGroup"
+            description="Call and executes all xdpGroup test cases (targets)">
+        <echo>Successfully ran all XdpGroup UI tests!</echo>
+    </target>
+
+    <!-- Verify the xdpGroups list screen displays without errors -->
+    <target name="SearchXdpGroups" description="Tests search for and displaying all xdpGroups">
+        <webtest name="searchXdpGroups">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click View XdpGroup link" url="/xdpGroups"/>
+                <verifytitle description="we should see the xdpGroupList title"
+                             text=".*${xdpGroupList.title}.*" regex="true"/>
+                <setinputfield description="set search term" name="q" value="*"/>
+                <clickbutton label="${button.search}" description="Click Search"/>
+                <verifytitle description="we should see the xdpGroupList title"
+                             text=".*${xdpGroupList.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify the edit xdpGroup screen displays without errors -->
+    <target name="EditXdpGroup" description="Tests editing an existing XdpGroup's information">
+        <webtest name="editXdpGroup">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpGroup link" url="/editXdpGroup?id=-1"/>
+                <verifytitle description="we should see the xdpGroupDetail title"
+                             text=".*${xdpGroupDetail.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Edit a xdpGroup and then save -->
+    <target name="SaveXdpGroup" description="Tests editing and saving a xdpGroup">
+        <webtest name="saveXdpGroup">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpGroup link" url="/editXdpGroup?id=-1"/>
+                <verifytitle description="we should see the xdpGroupDetail title"
+                             text=".*${xdpGroupDetail.title}.*" regex="true"/>
+
+                <!-- update some of the required fields -->
+                <setCheckbox description="set enabled" name="xdpGroup.enabled" value="true"/>
+                <setInputField description="set name" name="xdpGroup.name" value="RmEyRmRnHzRtYjBkHiJzYiJxUlVuLwUbYzHpDxAzHtPfDiCyYe"/>
+                <setInputField description="set updateDate" name="xdpGroup.updateDate" value="09/16/2013"/>
+                <setInputField description="set updateUser" name="xdpGroup.updateUser" value="SaNhEkRrDwBcLbGgTeRlWyMmAjAsLoFwGxIfJsMwAzMkDyQuXkOvNoDtOtVlYxXkEoZuRoYmJwIeVeVgVbWhOjZdChPnYcSjRsAeCwCpCeUxBcAkRmJnHvIiAcJcIrVxYnWlOkHuQxIrGsSeSiQqOcJhPeEkQcAbYlLlLnBsInMbZoXxOoPaMeDqUnWqQaBbWgHtZnVjMeYhPaJiKtBjVyFhFlJfAsYiTrTcHxAcGaAiFvJyXpTdIaDmGeGhOlY"/>
+
+                <clickbutton label="${button.save}" description="Click Save"/>
+                <verifytitle description="Page re-appears if save successful"
+                             text=".*${xdpGroupDetail.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpGroup.updated}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Add a new XdpGroup -->
+    <target name="AddXdpGroup" description="Adds a new XdpGroup">
+        <webtest name="addXdpGroup">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Add Button" url="/editXdpGroup"/>
+                <verifytitle description="we should see the xdpGroupDetail title"
+                             text=".*${xdpGroupDetail.title}.*" regex="true"/>
+
+                <!-- enter required fields -->
+                <setCheckbox description="set enabled" name="xdpGroup.enabled" value="true"/>
+                <setInputField description="set name" name="xdpGroup.name" value="GyUtReGjPfZfTuQnPvPmGlHuXrOjFePjNmZhAsWmCtSzLiEbNj"/>
+                <setInputField description="set updateDate" name="xdpGroup.updateDate" value="09/16/2013"/>
+                <setInputField description="set updateUser" name="xdpGroup.updateUser" value="BmYhCyDhIwWnObQdFtCoCsFaTzRtKbCpOdXtMnIwGlOrEuQbDaMzVeKbZiKsYcUyEyTzRnDlTvPiIaBnAfWtYfHyJiBqXgAhLnNdAqWtVpDuVxEaKeZpKuTsWeEcTfVzFiTgWxZxXwXpJsQlIaLpIkSxQeNnQoHiCbNlZpTlLzNhCdYqSuDhLgUuLdLcVpMhVqXgZoCmFnBkDdSgBqSgTlHsJvPuKzNeZnOpFoYfKmOsIaTtFbJbLpSsUzMsHeA"/>
+
+                <clickbutton label="${button.save}" description="Click button 'Save'"/>
+                <verifytitle description="XdpGroup List appears if save successful"
+                             text=".*${xdpGroupList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpGroup.added}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Delete existing xdpGroup -->
+    <target name="DeleteXdpGroup" description="Deletes existing XdpGroup">
+        <webtest name="deleteXdpGroup">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpGroup link" url="/editXdpGroup?id=-1"/>
+                <prepareDialogResponse description="Confirm delete" dialogType="confirm" response="true"/>
+                <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+                <verifyNoDialogResponses/>
+                <verifytitle description="display XdpGroup List" text=".*${xdpGroupList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpGroup.deleted}"/>
+            </steps>
+        </webtest>
+    </target>
+    <!--XdpGroup-END-->
+    <!--XdpSystem-START-->
+    <!-- runs xdpSystem-related tests -->
+    <target name="XdpSystemTests" depends="SearchXdpSystems,EditXdpSystem,SaveXdpSystem,AddXdpSystem,DeleteXdpSystem"
+            description="Call and executes all xdpSystem test cases (targets)">
+        <echo>Successfully ran all XdpSystem UI tests!</echo>
+    </target>
+
+    <!-- Verify the xdpSystems list screen displays without errors -->
+    <target name="SearchXdpSystems" description="Tests search for and displaying all xdpSystems">
+        <webtest name="searchXdpSystems">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click View XdpSystem link" url="/xdpSystems"/>
+                <verifytitle description="we should see the xdpSystemList title"
+                             text=".*${xdpSystemList.title}.*" regex="true"/>
+                <setinputfield description="set search term" name="q" value="*"/>
+                <clickbutton label="${button.search}" description="Click Search"/>
+                <verifytitle description="we should see the xdpSystemList title"
+                             text=".*${xdpSystemList.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify the edit xdpSystem screen displays without errors -->
+    <target name="EditXdpSystem" description="Tests editing an existing XdpSystem's information">
+        <webtest name="editXdpSystem">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpSystem link" url="/editXdpSystem?id=-1"/>
+                <verifytitle description="we should see the xdpSystemDetail title"
+                             text=".*${xdpSystemDetail.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Edit a xdpSystem and then save -->
+    <target name="SaveXdpSystem" description="Tests editing and saving a xdpSystem">
+        <webtest name="saveXdpSystem">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpSystem link" url="/editXdpSystem?id=-1"/>
+                <verifytitle description="we should see the xdpSystemDetail title"
+                             text=".*${xdpSystemDetail.title}.*" regex="true"/>
+
+                <!-- update some of the required fields -->
+                <setInputField description="set filePath" name="xdpSystem.filePath" value="LtAgCbXhVvYoEwYkXmMzAiVbOwZiDsRtQuOiDsXlHzEgAwOkXaBvXoOeMbYhWgHrQxArJuOwEaYsDdWaUuTwUxEnReRjYaArEkWl"/>
+                <setInputField description="set name" name="xdpSystem.name" value="JhTpWeIxWiJyVuTaAbMgWjIzNpPiMmPtPbQrYlAwBiWxUtMqGo"/>
+                <setInputField description="set updateDate" name="xdpSystem.updateDate" value="09/16/2013"/>
+
+                <clickbutton label="${button.save}" description="Click Save"/>
+                <verifytitle description="Page re-appears if save successful"
+                             text=".*${xdpSystemDetail.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpSystem.updated}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Add a new XdpSystem -->
+    <target name="AddXdpSystem" description="Adds a new XdpSystem">
+        <webtest name="addXdpSystem">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Add Button" url="/editXdpSystem"/>
+                <verifytitle description="we should see the xdpSystemDetail title"
+                             text=".*${xdpSystemDetail.title}.*" regex="true"/>
+
+                <!-- enter required fields -->
+                <setInputField description="set filePath" name="xdpSystem.filePath" value="SwWeCtSoGyZnOaXvKyLvZiIyUwLdMkEuGvPaBiVqHbNrAtIgEmTcZjPkKfGfSyPgTmKxSiAzMnLtUoMgEyGnQnTmUnNwBbRaHeOp"/>
+                <setInputField description="set name" name="xdpSystem.name" value="HiCuEpSgKfStZmWiNeMkQdKuYyKnYqCtXmOaBmErNiWjLoYsSw"/>
+                <setInputField description="set updateDate" name="xdpSystem.updateDate" value="09/16/2013"/>
+
+                <clickbutton label="${button.save}" description="Click button 'Save'"/>
+                <verifytitle description="XdpSystem List appears if save successful"
+                             text=".*${xdpSystemList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpSystem.added}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Delete existing xdpSystem -->
+    <target name="DeleteXdpSystem" description="Deletes existing XdpSystem">
+        <webtest name="deleteXdpSystem">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpSystem link" url="/editXdpSystem?id=-1"/>
+                <prepareDialogResponse description="Confirm delete" dialogType="confirm" response="true"/>
+                <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+                <verifyNoDialogResponses/>
+                <verifytitle description="display XdpSystem List" text=".*${xdpSystemList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpSystem.deleted}"/>
+            </steps>
+        </webtest>
+    </target>
+    <!--XdpSystem-END-->
+    <!--XdpProcess-START-->
+    <!-- runs xdpProcess-related tests -->
+    <target name="XdpProcessTests" depends="SearchXdpProcesses,EditXdpProcess,SaveXdpProcess,AddXdpProcess,DeleteXdpProcess"
+            description="Call and executes all xdpProcess test cases (targets)">
+        <echo>Successfully ran all XdpProcess UI tests!</echo>
+    </target>
+
+    <!-- Verify the xdpProcesses list screen displays without errors -->
+    <target name="SearchXdpProcesses" description="Tests search for and displaying all xdpProcesses">
+        <webtest name="searchXdpProcesses">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click View XdpProcess link" url="/xdpProcesses"/>
+                <verifytitle description="we should see the xdpProcessList title"
+                             text=".*${xdpProcessList.title}.*" regex="true"/>
+                <setinputfield description="set search term" name="q" value="*"/>
+                <clickbutton label="${button.search}" description="Click Search"/>
+                <verifytitle description="we should see the xdpProcessList title"
+                             text=".*${xdpProcessList.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify the edit xdpProcess screen displays without errors -->
+    <target name="EditXdpProcess" description="Tests editing an existing XdpProcess's information">
+        <webtest name="editXdpProcess">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpProcess link" url="/editXdpProcess?id=-1"/>
+                <verifytitle description="we should see the xdpProcessDetail title"
+                             text=".*${xdpProcessDetail.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Edit a xdpProcess and then save -->
+    <target name="SaveXdpProcess" description="Tests editing and saving a xdpProcess">
+        <webtest name="saveXdpProcess">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpProcess link" url="/editXdpProcess?id=-1"/>
+                <verifytitle description="we should see the xdpProcessDetail title"
+                             text=".*${xdpProcessDetail.title}.*" regex="true"/>
+
+                <!-- update some of the required fields -->
+                <setInputField description="set code" name="xdpProcess.code" value="Ql"/>
+                <setCheckbox description="set enabled" name="xdpProcess.enabled" value="true"/>
+                <setInputField description="set name" name="xdpProcess.name" value="RfBuOnZnSvIwWiJoDxBuDkSkJtVvIvTaTuQvGjDwJuAvSkXkHq"/>
+                <setInputField description="set sortNo" name="xdpProcess.sortNo" value="1989782890488723456"/>
+                <setInputField description="set updateDate" name="xdpProcess.updateDate" value="09/25/2013"/>
+                <setInputField description="set updateUser" name="xdpProcess.updateUser" value="UgRiIuXaIiFiWjXgZzSqMsPhJbFuLkOzSrEqCmJoEbStEdRaScQrGsQoKnOpBhJvPyWnKkLcBwWpXmEtFvBwVcWlFpDhUiNaAePvQtPwFqGuMrWpCeDaKvYyYlDmWiDlTgBdMhObFnJqQrMcEnBtPmOaPtDqMtMrXfJsGeVnDaNoLlSrPuFsOiAsJtZwTyOqDyJpVyIuUzBoSmVvKnIuLdXvXsJuHaAbEeBgMpLfIiVnQqUdXxBtAsGqCjFoBoD"/>
+
+                <clickbutton label="${button.save}" description="Click Save"/>
+                <verifytitle description="Page re-appears if save successful"
+                             text=".*${xdpProcessDetail.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpProcess.updated}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Add a new XdpProcess -->
+    <target name="AddXdpProcess" description="Adds a new XdpProcess">
+        <webtest name="addXdpProcess">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Add Button" url="/editXdpProcess"/>
+                <verifytitle description="we should see the xdpProcessDetail title"
+                             text=".*${xdpProcessDetail.title}.*" regex="true"/>
+
+                <!-- enter required fields -->
+                <setInputField description="set code" name="xdpProcess.code" value="Jn"/>
+                <setCheckbox description="set enabled" name="xdpProcess.enabled" value="true"/>
+                <setInputField description="set name" name="xdpProcess.name" value="NdYpCzOcTwHoZlHvWrBtLvIyYrHdSlYmZbYqCtQrNkFdGzGfWf"/>
+                <setInputField description="set sortNo" name="xdpProcess.sortNo" value="7184558231804572672"/>
+                <setInputField description="set updateDate" name="xdpProcess.updateDate" value="09/25/2013"/>
+                <setInputField description="set updateUser" name="xdpProcess.updateUser" value="SzStYfDrBwApNpZqLxHeFxCvQfTxYpQdEnBsIwOzIyPyQkIxWqQiYrJySoDtJxMxFzEgUzCyZoRqEoJwMsQwDpFzXvZbDiMhRsTbOfViVaRhWtDuQmJzZtFfEqVyImTyGePpNnBmKtVbAzNiTjSkCnQsXlYeWxWjZeHaQuLfQzXdCjVyWvKhYcXiRxDrEcPhVzGpPiQxMnHsMiEmKaFcVkLwCiAsBuOuSfCgYuFaYbKhIcQhHhGzTvLtWpNgSoH"/>
+
+                <clickbutton label="${button.save}" description="Click button 'Save'"/>
+                <verifytitle description="XdpProcess List appears if save successful"
+                             text=".*${xdpProcessList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpProcess.added}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Delete existing xdpProcess -->
+    <target name="DeleteXdpProcess" description="Deletes existing XdpProcess">
+        <webtest name="deleteXdpProcess">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpProcess link" url="/editXdpProcess?id=-1"/>
+                <prepareDialogResponse description="Confirm delete" dialogType="confirm" response="true"/>
+                <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+                <verifyNoDialogResponses/>
+                <verifytitle description="display XdpProcess List" text=".*${xdpProcessList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpProcess.deleted}"/>
+            </steps>
+        </webtest>
+    </target>
+    <!--XdpProcess-END-->
+    <!--XdpGroupDocType-START-->
+    <!-- runs xdpGroupDocType-related tests -->
+    <target name="XdpGroupDocTypeTests" depends="SearchXdpGroupDocTypes,EditXdpGroupDocType,SaveXdpGroupDocType,AddXdpGroupDocType,DeleteXdpGroupDocType"
+            description="Call and executes all xdpGroupDocType test cases (targets)">
+        <echo>Successfully ran all XdpGroupDocType UI tests!</echo>
+    </target>
+
+    <!-- Verify the xdpGroupDocTypes list screen displays without errors -->
+    <target name="SearchXdpGroupDocTypes" description="Tests search for and displaying all xdpGroupDocTypes">
+        <webtest name="searchXdpGroupDocTypes">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click View XdpGroupDocType link" url="/xdpGroupDocTypes"/>
+                <verifytitle description="we should see the xdpGroupDocTypeList title"
+                             text=".*${xdpGroupDocTypeList.title}.*" regex="true"/>
+                <setinputfield description="set search term" name="q" value="*"/>
+                <clickbutton label="${button.search}" description="Click Search"/>
+                <verifytitle description="we should see the xdpGroupDocTypeList title"
+                             text=".*${xdpGroupDocTypeList.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify the edit xdpGroupDocType screen displays without errors -->
+    <target name="EditXdpGroupDocType" description="Tests editing an existing XdpGroupDocType's information">
+        <webtest name="editXdpGroupDocType">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpGroupDocType link" url="/editXdpGroupDocType?id=-1"/>
+                <verifytitle description="we should see the xdpGroupDocTypeDetail title"
+                             text=".*${xdpGroupDocTypeDetail.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Edit a xdpGroupDocType and then save -->
+    <target name="SaveXdpGroupDocType" description="Tests editing and saving a xdpGroupDocType">
+        <webtest name="saveXdpGroupDocType">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpGroupDocType link" url="/editXdpGroupDocType?id=-1"/>
+                <verifytitle description="we should see the xdpGroupDocTypeDetail title"
+                             text=".*${xdpGroupDocTypeDetail.title}.*" regex="true"/>
+
+                <!-- update some of the required fields -->
+                <setInputField description="set docNum" name="xdpGroupDocType.docNum" value="5454188910561501184"/>
+                <setCheckbox description="set enabled" name="xdpGroupDocType.enabled" value="true"/>
+                <setInputField description="set name" name="xdpGroupDocType.name" value="HgQpHqSsYrNlSuWiXmHcAjVjQmNuQvVhAkWpBzHzRxBtJqDtYi"/>
+                <setInputField description="set sortNo" name="xdpGroupDocType.sortNo" value="1334854563250380800"/>
+                <setInputField description="set updateDate" name="xdpGroupDocType.updateDate" value="09/25/2013"/>
+                <setInputField description="set updateUser" name="xdpGroupDocType.updateUser" value="BeWmStZsZgGiOoLlDrLmLuXlKuBcWzPrNwJeFcTcXtToTkJsQcOtYeIxSdUqXnSfHpBeMaQqYxLfGgJaNgKvTeJoJhWwUcPaKrSbHoYzXkCzBnNeIeOjAqRpGvFeZfIrAqLrGrJnByXwLgNuYtYzVgFdEdUsDfHxWzRwVtZpTmRsBcAjGrWdCfPxEuTfLiNmCeOvMfVaBsBxFoYgUeSsZbNoRjBpYiAiBuQpHvDzVzJqIuEwAvOiNxKxHdDnEdV"/>
+
+                <clickbutton label="${button.save}" description="Click Save"/>
+                <verifytitle description="Page re-appears if save successful"
+                             text=".*${xdpGroupDocTypeDetail.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpGroupDocType.updated}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Add a new XdpGroupDocType -->
+    <target name="AddXdpGroupDocType" description="Adds a new XdpGroupDocType">
+        <webtest name="addXdpGroupDocType">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Add Button" url="/editXdpGroupDocType"/>
+                <verifytitle description="we should see the xdpGroupDocTypeDetail title"
+                             text=".*${xdpGroupDocTypeDetail.title}.*" regex="true"/>
+
+                <!-- enter required fields -->
+                <setInputField description="set docNum" name="xdpGroupDocType.docNum" value="1927114288159420416"/>
+                <setCheckbox description="set enabled" name="xdpGroupDocType.enabled" value="true"/>
+                <setInputField description="set name" name="xdpGroupDocType.name" value="NbLwJoOvZbLzVfOpKsApIqOvMjXlCrUdCpTtFlBpWuRpZoXhCp"/>
+                <setInputField description="set sortNo" name="xdpGroupDocType.sortNo" value="4659713822189030400"/>
+                <setInputField description="set updateDate" name="xdpGroupDocType.updateDate" value="09/25/2013"/>
+                <setInputField description="set updateUser" name="xdpGroupDocType.updateUser" value="VxTfSaSbPhDbPyFvFnChGdImKkIoLuWuSrBcEvUrReLpOrKyMzUgRpZvTkIyQpVmTwVfWhErFwXvAqPkVtTdOpJhQvHoAnLdDdIrQjNfVzDuSdXiLnOjVmOcGbHdDzBlYwFbXiArZuGmAgFfUvAzWhSkVjQzZnPoKePvJtZgYpIhEwHkBgBiOsUdRiVsMzVyOwCbWkRsVlDtWpGxWkAsGmNrJqCfVsXeCcElMsTkFaYuQkJlHsEsWtXeOdOqOgL"/>
+
+                <clickbutton label="${button.save}" description="Click button 'Save'"/>
+                <verifytitle description="XdpGroupDocType List appears if save successful"
+                             text=".*${xdpGroupDocTypeList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpGroupDocType.added}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Delete existing xdpGroupDocType -->
+    <target name="DeleteXdpGroupDocType" description="Deletes existing XdpGroupDocType">
+        <webtest name="deleteXdpGroupDocType">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpGroupDocType link" url="/editXdpGroupDocType?id=-1"/>
+                <prepareDialogResponse description="Confirm delete" dialogType="confirm" response="true"/>
+                <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+                <verifyNoDialogResponses/>
+                <verifytitle description="display XdpGroupDocType List" text=".*${xdpGroupDocTypeList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpGroupDocType.deleted}"/>
+            </steps>
+        </webtest>
+    </target>
+    <!--XdpGroupDocType-END-->
+    <!--XdpGroupDoc-START-->
+    <!-- runs xdpGroupDoc-related tests -->
+    <target name="XdpGroupDocTests" depends="SearchXdpGroupDocs,EditXdpGroupDoc,SaveXdpGroupDoc,AddXdpGroupDoc,DeleteXdpGroupDoc"
+            description="Call and executes all xdpGroupDoc test cases (targets)">
+        <echo>Successfully ran all XdpGroupDoc UI tests!</echo>
+    </target>
+
+    <!-- Verify the xdpGroupDocs list screen displays without errors -->
+    <target name="SearchXdpGroupDocs" description="Tests search for and displaying all xdpGroupDocs">
+        <webtest name="searchXdpGroupDocs">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click View XdpGroupDoc link" url="/xdpGroupDocs"/>
+                <verifytitle description="we should see the xdpGroupDocList title"
+                             text=".*${xdpGroupDocList.title}.*" regex="true"/>
+                <setinputfield description="set search term" name="q" value="*"/>
+                <clickbutton label="${button.search}" description="Click Search"/>
+                <verifytitle description="we should see the xdpGroupDocList title"
+                             text=".*${xdpGroupDocList.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify the edit xdpGroupDoc screen displays without errors -->
+    <target name="EditXdpGroupDoc" description="Tests editing an existing XdpGroupDoc's information">
+        <webtest name="editXdpGroupDoc">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpGroupDoc link" url="/editXdpGroupDoc?id=-1"/>
+                <verifytitle description="we should see the xdpGroupDocDetail title"
+                             text=".*${xdpGroupDocDetail.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Edit a xdpGroupDoc and then save -->
+    <target name="SaveXdpGroupDoc" description="Tests editing and saving a xdpGroupDoc">
+        <webtest name="saveXdpGroupDoc">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpGroupDoc link" url="/editXdpGroupDoc?id=-1"/>
+                <verifytitle description="we should see the xdpGroupDocDetail title"
+                             text=".*${xdpGroupDocDetail.title}.*" regex="true"/>
+
+                <!-- update some of the required fields -->
+                <setInputField description="set checkDate" name="xdpGroupDoc.checkDate" value="09/25/2013"/>
+                <setInputField description="set checkUser" name="xdpGroupDoc.checkUser" value="XwHjTqCqEzGtVnJzBcWpMqVlShWbGvSaLiGrElFdJvCdStBcCfFvLcSyDmFpEsPpBvCfDkEcCvXzNvVtFuMvQrQeCuTnTcGrQtEvMrLvGbTdHvVkKcKoWhLiUgCoNwPsUwArKcBlAhOvBhLvZtLkQoErMuFaTvFbWmGpBjYzGzZgJsJiVhLbNjGmOgAxNbMqNqUqMkLnHwMiRcDhCaKrMzOqBlWnXvNhChMbNuMwXsQfJaTeSwOoPbCzZoQiQjN"/>
+                <setInputField description="set createDate" name="xdpGroupDoc.createDate" value="09/25/2013"/>
+                <setInputField description="set createUser" name="xdpGroupDoc.createUser" value="HbGrHfRiElDrLwNtMpVyUaGtPlPwXqLkYjXjNkXkElCgUxQjBzOvFeXgNpLcLhOoRtMiDlFpFhDoClByVuAoSfVkSzWtAjBxCrMpSjXiAcHoOeZqQoPvUpSuBeUtSwSkPtGhZeQsIcXoAyFmBlKzDfOjVqCzMpMmBlBoJkNvYaBdWzOmEmUmTkCoMuJpLcLwRyBvPvLmAuVxSoNfUbEaGnFlGjZrPbHsKkXfLuOaPpGcUxDhLxAkEqRmRaMeNvM"/>
+                <setCheckbox description="set enabled" name="xdpGroupDoc.enabled" value="true"/>
+                <setInputField description="set mgrNo" name="xdpGroupDoc.mgrNo" value="AfGhKyFg"/>
+                <setInputField description="set name" name="xdpGroupDoc.name" value="OjBbAhIfOnWhEwHwBrEfDkBiZyYyMuLcHuRcUbOmGoKtWmXmOk"/>
+                <setInputField description="set updateDate" name="xdpGroupDoc.updateDate" value="09/25/2013"/>
+                <setInputField description="set updateUser" name="xdpGroupDoc.updateUser" value="CdClRvDdVtKwWhEdPuMmLoHsBaHdEhScIySiHaDkGdFfAdWjNtItRnFwEiGoRpEeDoTdQkHvCxXaBwUpBxLjEgZlZcFpVkAtLkGiIwCpHyMfBuPfBpKnFtHyZiTnFiBfAqXaUkYdYnCvCpThMeMlGuXmGkMzWnYbRzVqOtMdGqOcCvMyDrVgPuMnMeDrZtSgYhLsYpQeAvDjIxXfFuCnVzNcWfXcZzSjXxOuNmKjJvLsWbLaNdEzWrLeKjEkPzH"/>
+                <setInputField description="set ver" name="xdpGroupDoc.ver" value="NhTxAgVpIp"/>
+
+                <clickbutton label="${button.save}" description="Click Save"/>
+                <verifytitle description="Page re-appears if save successful"
+                             text=".*${xdpGroupDocDetail.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpGroupDoc.updated}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Add a new XdpGroupDoc -->
+    <target name="AddXdpGroupDoc" description="Adds a new XdpGroupDoc">
+        <webtest name="addXdpGroupDoc">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Add Button" url="/editXdpGroupDoc"/>
+                <verifytitle description="we should see the xdpGroupDocDetail title"
+                             text=".*${xdpGroupDocDetail.title}.*" regex="true"/>
+
+                <!-- enter required fields -->
+                <setInputField description="set checkDate" name="xdpGroupDoc.checkDate" value="09/25/2013"/>
+                <setInputField description="set checkUser" name="xdpGroupDoc.checkUser" value="BtIlPjMhSjNuEeBlPhWhKlBvKxLvBzJiTmNnRwMdQoBsHxMnXpCbUbTwGhZaInBzWxUoXaIhCvLvVwNiVaDhDtHeIrInCbVjUcGqRiZeQfTvTqXbUlBzSbVcDpMaHcYqShFhGhDwPuJoYqTuYvOdSkZwNmCfKxWkUiCmLhTiYbFxYvKoIaHpTxYeLmKpDuLgDiKbKtAnAiCwGpKcYjQvEzUbCoHcCuZeMsJfVpFxBpNxQzUiOfRdRlHcGaNzXjW"/>
+                <setInputField description="set createDate" name="xdpGroupDoc.createDate" value="09/25/2013"/>
+                <setInputField description="set createUser" name="xdpGroupDoc.createUser" value="VlMiGaVbCmRlUvEzUgWlElPuNyFhGiPbKxRrVvJgYqIoDgHhKsNoRgDfAdHeCvOiDuBzDaJcRxZuWkEeRhVsEyLqNcPbSkSdZwHmOwLvKuMuJbQnUpKwNzBwHmYmDnXnOxYmJzJoWmBcGwCkFoRnBsOjFfJfSjJiDfCjYgCbKoTfEnZpOaCaKgJiOaBbKmDtIfCsWmRlAyXzXnYyMjJmLbJfQwKwTjNxNkNrWoUdEhXjWxArBaFrLtZiBbQyQpB"/>
+                <setCheckbox description="set enabled" name="xdpGroupDoc.enabled" value="true"/>
+                <setInputField description="set mgrNo" name="xdpGroupDoc.mgrNo" value="VwLiMdRk"/>
+                <setInputField description="set name" name="xdpGroupDoc.name" value="FeEjKpPzViCcJnWlRyBhMtBmWlTpNwAsZlDjEuMdGaPkUjDhHs"/>
+                <setInputField description="set updateDate" name="xdpGroupDoc.updateDate" value="09/25/2013"/>
+                <setInputField description="set updateUser" name="xdpGroupDoc.updateUser" value="BhOaKdYrXxGhNaSlKyPgOfQrOxGeXeJqNbXhYmGyXrThZlOlHzVlEqUuVdKvAtDfZzOnOaLqAeEiImAzRfFaTaKoNlFgLfTmGzDtYjRbJcSiGuKbPoQrRsSlKbRgToIjQoVyElBePhUfAjMhKrVjLaSiZmKmLlKxTzIjOgNxRtIgNcTfUsCsAbJvCzTjRiPbEoFaKqNjGwHbRfLgNjFlOoJuSrXxElOcRlPnOgPuZwUpVgIpYgRlCiVaZjNbMrA"/>
+                <setInputField description="set ver" name="xdpGroupDoc.ver" value="KlQsTqDnCa"/>
+
+                <clickbutton label="${button.save}" description="Click button 'Save'"/>
+                <verifytitle description="XdpGroupDoc List appears if save successful"
+                             text=".*${xdpGroupDocList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpGroupDoc.added}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Delete existing xdpGroupDoc -->
+    <target name="DeleteXdpGroupDoc" description="Deletes existing XdpGroupDoc">
+        <webtest name="deleteXdpGroupDoc">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpGroupDoc link" url="/editXdpGroupDoc?id=-1"/>
+                <prepareDialogResponse description="Confirm delete" dialogType="confirm" response="true"/>
+                <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+                <verifyNoDialogResponses/>
+                <verifytitle description="display XdpGroupDoc List" text=".*${xdpGroupDocList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${xdpGroupDoc.deleted}"/>
+            </steps>
+        </webtest>
+    </target>
+    <!--XdpGroupDoc-END-->
+    <!--XdpDocType-START-->
+    <!-- runs XdpDocType-related tests -->
+    <target name="XdpDocTypeTests" depends="SearchXdpDocTypes,EditXdpDocType,SaveXdpDocType,AddXdpDocType,DeleteXdpDocType"
+            description="Call and executes all XdpDocType test cases (targets)">
+        <echo>Successfully ran all XdpDocType UI tests!</echo>
+    </target>
+
+    <!-- Verify the XdpDocTypes list screen displays without errors -->
+    <target name="SearchXdpDocTypes" description="Tests search for and displaying all XdpDocTypes">
+        <webtest name="searchXdpDocTypes">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click View XdpDocType link" url="/XdpDocTypes"/>
+                <verifytitle description="we should see the XdpDocTypeList title"
+                             text=".*${XdpDocTypeList.title}.*" regex="true"/>
+                <setinputfield description="set search term" name="q" value="*"/>
+                <clickbutton label="${button.search}" description="Click Search"/>
+                <verifytitle description="we should see the XdpDocTypeList title"
+                             text=".*${XdpDocTypeList.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify the edit XdpDocType screen displays without errors -->
+    <target name="EditXdpDocType" description="Tests editing an existing XdpDocType's information">
+        <webtest name="editXdpDocType">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpDocType link" url="/editXdpDocType?id=-1"/>
+                <verifytitle description="we should see the XdpDocTypeDetail title"
+                             text=".*${XdpDocTypeDetail.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Edit a XdpDocType and then save -->
+    <target name="SaveXdpDocType" description="Tests editing and saving a XdpDocType">
+        <webtest name="saveXdpDocType">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpDocType link" url="/editXdpDocType?id=-1"/>
+                <verifytitle description="we should see the XdpDocTypeDetail title"
+                             text=".*${XdpDocTypeDetail.title}.*" regex="true"/>
+
+                <!-- update some of the required fields -->
+                <setCheckbox description="set enabled" name="XdpDocType.enabled" value="true"/>
+                <setInputField description="set name" name="XdpDocType.name" value="BbNvNmFlTcNjBkNgKvXaPzQhAzLeQxZgZhFnYtTrGxJySjHqTx"/>
+                <setInputField description="set sortNo" name="XdpDocType.sortNo" value="347089956508490752"/>
+                <setInputField description="set updateDate" name="XdpDocType.updateDate" value="09/25/2013"/>
+                <setInputField description="set updateUser" name="XdpDocType.updateUser" value="UdRdUhHnIlDbVyYiEsLuQuIwQuVyHvZcUvAwAtCaUkVfQwIaApCyXpHsLyVhImUlZdWmSqBhOuXlTlThVlNlXrVgZcSkOtBiEpLeSzUjQpKbQcBiTdUuCuDyRhLyIyGoRsQlOrZsGlDyBaNeDsEbRvAwEzHyQsMaBkWjDwXuJfJmNqVhOxTzNbKtAmTjVyQpRqXcTnFgQnVjShOvEtWvEcMvPyUvAeAmZaIpIhByCpHiKcPvIpXzIrPmEbDjCxY"/>
+
+                <clickbutton label="${button.save}" description="Click Save"/>
+                <verifytitle description="Page re-appears if save successful"
+                             text=".*${XdpDocTypeDetail.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${XdpDocType.updated}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Add a new XdpDocType -->
+    <target name="AddXdpDocType" description="Adds a new XdpDocType">
+        <webtest name="addXdpDocType">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Add Button" url="/editXdpDocType"/>
+                <verifytitle description="we should see the XdpDocTypeDetail title"
+                             text=".*${XdpDocTypeDetail.title}.*" regex="true"/>
+
+                <!-- enter required fields -->
+                <setCheckbox description="set enabled" name="XdpDocType.enabled" value="true"/>
+                <setInputField description="set name" name="XdpDocType.name" value="MgDtNzQdPwNsZpFcUnGqEkCtSiNcPdUpSoTwMrDkKiOiJnEmMg"/>
+                <setInputField description="set sortNo" name="XdpDocType.sortNo" value="4865279053596510208"/>
+                <setInputField description="set updateDate" name="XdpDocType.updateDate" value="09/25/2013"/>
+                <setInputField description="set updateUser" name="XdpDocType.updateUser" value="JsNjGaTnJeKdKpAiZlJdTfBrReQnTaPvQfLjOnAmFmNvMcFxVpBpBoXqSvBxFdQcCjClNjUyBjAdFwAfOdMdKiEaOgWzDvKcQzDuQiDcYlThFhLwUoSmPkGpEiHbVzYvOhWbTqJyMmHuReWdIbHzBrHyMiJoFqSeNtJuBeVjDyMiSzQoSlKmRhGkPrPdAbAwBpTrYuZaRyRtDjQcJuImDeIfLzGtZpCtXeYoUvAmOnNkGrHnRxHlMsIvMlLaSfY"/>
+
+                <clickbutton label="${button.save}" description="Click button 'Save'"/>
+                <verifytitle description="XdpDocType List appears if save successful"
+                             text=".*${XdpDocTypeList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${XdpDocType.added}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Delete existing XdpDocType -->
+    <target name="DeleteXdpDocType" description="Deletes existing XdpDocType">
+        <webtest name="deleteXdpDocType">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit XdpDocType link" url="/editXdpDocType?id=-1"/>
+                <prepareDialogResponse description="Confirm delete" dialogType="confirm" response="true"/>
+                <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+                <verifyNoDialogResponses/>
+                <verifytitle description="display XdpDocType List" text=".*${XdpDocTypeList.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${XdpDocType.deleted}"/>
+            </steps>
+        </webtest>
+    </target>
+    <!--XdpDocType-END-->
+</project>
+
+
+
+
+
+
+

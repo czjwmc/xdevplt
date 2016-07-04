@@ -1,0 +1,49 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+    "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+    <field name="xdpGroupDoc.checkDate">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="xdpGroupDoc.checkUser">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="xdpGroupDoc.createDate">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="xdpGroupDoc.createUser">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="xdpGroupDoc.mgrNo">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="xdpGroupDoc.name">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="xdpGroupDoc.updateDate">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="xdpGroupDoc.updateUser">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="xdpGroupDoc.ver">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+</validators> 

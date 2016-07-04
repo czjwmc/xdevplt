@@ -1,0 +1,105 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+    "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+    <field name="user.username">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+        <field-validator type="stringlength"> <!-- Added by wx Ver0.0.1. -->
+            <param name="maxLength">50</param>
+            <param name="trim">true</param>
+            <message key="errors.maxlength"/>
+        </field-validator>
+    </field>
+    <field name="user.password">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="user.confirmPassword">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+        <field-validator type="fieldexpression">
+            <param name="expression">
+                (user.confirmPassword.equals(user.password))
+            </param> 
+            <message key="errors.twofields"/>
+        </field-validator>
+    </field>
+    <field name="user.passwordHint">
+        <!-- Deleted by wx Ver0.0.5. 
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator> -->
+        <field-validator type="stringlength"> <!-- Added by wx Ver0.0.1. -->
+            <param name="maxLength">50</param>
+            <param name="trim">true</param>
+            <message key="errors.maxlength"/>
+        </field-validator>
+    </field>
+    <field name="user.firstName">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+        <field-validator type="stringlength"> <!-- Added by wx Ver0.0.1. -->
+            <param name="maxLength">50</param>
+            <param name="trim">true</param>
+            <message key="errors.maxlength"/>
+        </field-validator>
+    </field>
+    <field name="user.lastName">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+        <field-validator type="stringlength"> <!-- Added by wx Ver0.0.1. -->
+            <param name="maxLength">50</param>
+            <param name="trim">true</param>
+            <message key="errors.maxlength"/>
+        </field-validator>
+    </field>
+    <field name="user.email">
+        <!-- Deleted by wx Ver0.0.1. 
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+        -->
+        <field-validator type="email">
+            <message key="errors.email"/>
+        </field-validator>
+        <field-validator type="stringlength"> <!-- Added by wx Ver0.0.1. -->
+            <param name="maxLength">100</param>
+            <param name="trim">true</param>
+            <message key="errors.maxlength"/>
+        </field-validator>
+    </field>
+    <!-- Start: Added by wx Ver0.0.1. -->
+    <field name="user.phoneNumber">
+        <field-validator type="regex">
+            <param name="expression">(^[0]?\d{11}$)|(^(\d{2,6}[-])?(\d{2,5}[-])?\d{3,4}[-]?\d{4}([-]\d{1,5})?$)</param>
+            <message key="errors.phone" />
+        </field-validator>
+        <field-validator type="stringlength">
+            <param name="maxLength">50</param>
+            <param name="trim">true</param>
+            <message key="errors.maxlength"/>
+        </field-validator>
+    </field>
+    <field name="user.website">
+        <field-validator type="url">
+            <message key="errors.url" />
+        </field-validator>
+        <field-validator type="stringlength">
+            <param name="maxLength">100</param>
+            <param name="trim">true</param>
+            <message key="errors.maxlength"/>
+        </field-validator>
+    </field>
+    <field name="user.address.postalCode">
+        <field-validator type="regex">
+            <param name="expression">^[1-9]\d{4,5}$</param>
+            <message key="errors.zip" />
+        </field-validator>
+    </field>
+    <!-- End: Added by wx Ver0.0.1. -->
+</validators>

@@ -1,0 +1,1407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>    
+    <table name="app_user">
+        <column>id</column>
+        <column>username</column>
+        <column>password</column>
+        <column>first_name</column>
+        <column>last_name</column>
+        <column>address</column>
+        <column>city</column>
+        <column>country</column>
+        <column>email</column>
+        <column>phone_number</column>
+        <column>postal_code</column>
+        <column>province</column>
+        <column>website</column>
+        <column>password_hint</column>
+        <column>version</column>
+        <column>account_enabled</column>
+        <column>account_expired</column>
+        <column>account_locked</column>
+        <column>credentials_expired</column>
+        <column>updateUser</column>
+        <column>updateDate</column>
+        <row>
+            <value description="id">-1</value>
+            <value description="username">user</value>
+            <value description="password">b6b1f4781776979c0775c71ebdd8bdc084aac5fe</value>
+            <value description="first_name">User</value>
+            <value description="last_name">User</value>
+            <value description="address"></value>
+            <value description="city">Shanghai</value>
+            <value description="country">CN</value>
+            <value description="email">user@xdevplt.xujis.com</value>
+            <value description="phone_number">18800000001</value>
+            <value description="postal_code">200000</value>
+            <value description="province">SH</value>
+            <value description="website">http://xdevplt.xujis.com</value>
+            <value description="password_hint"><![CDATA[Normal user.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+            <value description="updateUser">user</value>
+            <value description="updateDate">2013-01-01</value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="username">admin</value>
+            <value description="password">a40546cc4fd6a12572828bb803380888ad1bfdab</value>
+            <value description="first_name">Admin</value>
+            <value description="last_name">User</value>
+            <value description="address"></value>
+            <value description="city">Shanghai</value>
+            <value description="country">CN</value>
+            <value description="email">admin@xdevplt.xujis.com</value>
+            <value description="phone_number">18800000002</value>
+            <value description="postal_code">200000</value>
+            <value description="province">SH</value>
+            <value description="website">http://xdevplt.xujis.com</value>
+            <value description="password_hint"><![CDATA[Admin user.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+            <value description="updateUser">admin</value>
+            <value description="updateDate">2013-01-01</value>
+        </row>
+        <row>
+            <value description="id">-3</value>
+            <value description="username">Leader</value>
+            <value description="password">a40546cc4fd6a12572828bb803380888ad1bfdab</value>
+            <value description="first_name">Leader</value>
+            <value description="last_name">User</value>
+            <value description="address"></value>
+            <value description="city">Shanghai</value>
+            <value description="country">CN</value>
+            <value description="email">Leader@xdevplt.xujis.com</value>
+            <value description="phone_number">18800000002</value>
+            <value description="postal_code">200000</value>
+            <value description="province">SH</value>
+            <value description="website">http://xdevplt.xujis.com</value>
+            <value description="password_hint"><![CDATA[Leader user.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+            <value description="updateUser">Leader</value>
+            <value description="updateDate">2013-01-01</value>
+        </row>
+        <row>
+            <value description="id">-4</value>
+            <value description="username">Manager</value>
+            <value description="password">a40546cc4fd6a12572828bb803380888ad1bfdab</value>
+            <value description="first_name">Manager</value>
+            <value description="last_name">User</value>
+            <value description="address"></value>
+            <value description="city">Shanghai</value>
+            <value description="country">CN</value>
+            <value description="email">Manager@xdevplt.xujis.com</value>
+            <value description="phone_number">18800000002</value>
+            <value description="postal_code">200000</value>
+            <value description="province">SH</value>
+            <value description="website">http://xdevplt.xujis.com</value>
+            <value description="password_hint"><![CDATA[Leader user.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+            <value description="updateUser">Manager</value>
+            <value description="updateDate">2013-01-01</value>
+        </row>
+        
+        
+    </table>
+    <table name="role">
+        <column>id</column>
+        <column>name</column>
+        <column>description</column>       
+        <row>
+            <value description="id">-1</value>
+            <value description="name">ROLE_USER</value>
+            <value description="description"><![CDATA[Default role for all Users]]></value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="name">ROLE_ADMIN</value>
+            <value description="description"><![CDATA[Administrator role (can edit Users)]]></value>
+        </row>
+         <row>
+            <value description="id">-3</value>
+            <value description="name">ROLE_LEADER</value>
+            <value description="description"><![CDATA[Leader role]]></value>
+        </row>
+        <row>
+            <value description="id">-4</value>
+            <value description="name">ROLE_MANAGER</value>
+            <value description="description"><![CDATA[Manager role]]></value>
+        </row>
+    </table>
+    <table name="user_role">
+        <column>user_id</column>
+        <column>role_id</column>
+        <row>
+            <value description="user_id">-1</value>
+            <value description="role_id">-1</value>
+        </row>
+        <row>
+            <value description="user_id">-2</value>
+            <value description="role_id">-2</value>
+        </row>
+        <row>
+            <value description="user_id">-3</value>
+            <value description="role_id">-3</value>
+        </row>
+        <row>
+            <value description="user_id">-4</value>
+            <value description="role_id">-4</value>
+        </row>      
+    </table>
+    
+    <!--Demo-START-->
+    <table name="Demo">
+        <column>id</column>
+        <column>createDate</column>
+        <column>createUser_id</column>    
+        <column>date</column>
+        <column>datetime</column>
+        <column>description</column>
+        <column>discountRate</column>
+        <column>enabled</column>
+        <column>name</column>
+        <column>percent</column>
+        <column>price</column>
+        <column>qty</column>
+        <column>total</column>
+        <column>updateDate</column>
+        <column>updateUser_id</column>    
+        <column>version</column>
+    <row>
+        <value description="id">-1</value>
+        <value description="createDate">2012-12-06</value>
+        <value description="createUser_id">-1</value>
+        <value description="date">2012-12-06</value>
+        <value description="datetime">2012-12-06</value>
+        <value description="description">VsUzDwJuFiOhAuWaHmWcNaNaAaAiUhFkTtUoRqMcWqYpWbLqUgHcEuOpLxUqBzQrWvFlUhKtFxNlXaUrEsCaLvSzReMqHmPwTaEnWnFlNnOlUzZsOrMsWjAbOqBqLgZyUwYxExTkRhQwUaCjXfRbIvTxEkPcKmGtFwNiUyPcLsZuAsFkBrJcExQfZfQrWyLzLlDoXiFv</value>
+        <value description="discountRate">1.0</value>
+        <value description="enabled">1</value>
+        <value description="name">JqRsSrZjSkZsWvMkAjDzUqZpGkHoKoVzXxHxYrHfPcIvGwTlCp</value>
+        <value description="percent">99.9999</value>
+        <value description="price">999999.99</value>
+        <value description="qty">999999</value>
+        <value description="total">999999999999.99</value>
+        <value description="updateDate">2012-12-06</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-2</value>
+        <value description="createDate">2012-12-06</value>
+        <value description="createUser_id">-2</value>
+        <value description="date">2012-12-06</value>
+        <value description="datetime">2012-12-06</value>
+        <value description="description">AhOjRjUpNpXdNjXaJwTjVbQhJvXbLeSnOqYyDnOnYkDtTsDzBwRgCsVuGaQgFzCmGoIoHfJqMlEhLrCxMgYwUfFqCwZzVtCqNkCeDeXdBhCiWzCjLhQiWbHaGgRvRkPuBoOmPmTqDbNrBxUgKiSeIlPeGcYfJnUoAsQeBqGeJpVvHsNpJcDuYtVhIpVfDuRgXyZuRzTl</value>
+        <value description="discountRate">0.999</value>
+        <value description="enabled">1</value>
+        <value description="name">NvXkWfYiBrHgUfYjQsJmJcMiLyQfAeFnEgKuTmUuYkPgQaMzPh</value>
+        <value description="percent">99.9999</value>
+        <value description="price">999999.99</value>
+        <value description="qty">999999</value>
+        <value description="total">999999999999.99</value>
+        <value description="updateDate">2012-12-06</value>
+        <value description="updateUser_id">-2</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-3</value>
+        <value description="createDate">2012-12-06</value>
+        <value description="createUser_id">-1</value>
+        <value description="date">2012-12-06</value>
+        <value description="datetime">2012-12-06</value>
+        <value description="description">RkCeUuMrBoGcQfKsMoWgTqLnGzHvOyUlAxShTlJrJtZpBfXyDxKuHtUcFwFhHtSxQiGuZfEbMvLzDrNiXrZgIvZmRuYfZsZsXjGkYhKqExGaHnLkQcPcLdUoRqAnGhUkFrWhDkQzMtHgEsShLkRhArNbVnUoRiGbUqRaRuKiLiXcBtFiZzGiTaZtLeRrHrLcXtAiWxMv</value>
+        <value description="discountRate">0.999</value>
+        <value description="enabled">0</value>
+        <value description="name">MfKuXfSlTlInJeUyBpUoQfCeVqJfTrAvBuInExRgMbEnZvIhJx</value>
+        <value description="percent">99.9999</value>
+        <value description="price">999999.99</value>
+        <value description="qty">999999</value>
+        <value description="total">999999999999.99</value>
+        <value description="updateDate">2012-12-06</value>
+        <value description="updateUser_id">-2</value>
+        <value description="version">1</value>
+    </row>
+    </table>
+    <!--Demo-END-->
+    <!--XdpSystem-START-->
+    <table name="XdpSystem">
+        <column>id</column>
+        <column>description</column>
+        <column>filePath</column>
+        <column>name</column>
+        <column>updateDate</column>
+        <column>updateUser_id</column>
+        <column>version</column>
+    <row>
+        <value description="id">-1</value>
+        <value description="description"></value>
+        <value description="filePath">c:\xdp</value>
+        <value description="name">旭记软件</value>
+        <value description="updateDate">2013-09-16</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    </table>
+    <!--XdpSystem-END-->
+    <!--XdpGroup-START-->
+    <table name="XdpGroup">
+        <column>id</column>
+        <column>description</column>
+        <column>email</column>
+        <column>enabled</column>
+        <column>name</column>
+        <column>code</column>
+        <column>maxMgrNo</column>
+        <column>updateDate</column>
+        <column>updateUser_id</column> 
+        <column>version</column>
+    <row>
+        <value description="id">-1</value>
+        <value description="description"></value>
+        <value description="email">czjwmc@163.com</value>
+        <value description="enabled">1</value>
+        <value description="name">培训1</value>       
+        <value description="code">TRN</value>
+        <value description="maxMgrNo">0</value>
+        <value description="updateDate">2013-09-16</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-2</value>
+        <value description="description"></value>
+        <value description="email">czjwmc@163.com</value>
+        <value description="enabled">1</value>
+        <value description="name">培训2</value>       
+        <value description="code">TRO</value>
+        <value description="maxMgrNo">1</value>
+        <value description="updateDate">2013-09-16</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-3</value>
+        <value description="description"></value>
+        <value description="email">czjwmc@163.com</value>
+        <value description="enabled">1</value>
+        <value description="name">培训3</value>       
+        <value description="code">TRP</value>
+        <value description="maxMgrNo">2</value>
+        <value description="updateDate">2013-09-16</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    </table>
+    <!--XdpGroup-END--> 
+    <!-- user_group-start -->
+    <table name="user_xdpgroup">
+        <column>user_id</column>
+        <column>xdpgroup_id</column>
+        <row>
+            <value description="user_id">-1</value>
+            <value description="xdpgroup_id">-1</value>
+        </row>
+        <row>
+            <value description="user_id">-2</value>
+            <value description="xdpgroup_id">-2</value>
+        </row>       
+        <row>
+            <value description="user_id">-3</value>
+            <value description="xdpgroup_id">-3</value>
+        </row>
+        <row>
+            <value description="user_id">-4</value>
+            <value description="xdpgroup_id">-3</value>
+        </row>                          
+                                  
+    </table>
+    <!-- user_group-end -->
+    <!--XdpProcess-START-->
+    <table name="XdpProcess">
+        <column>id</column>
+        <column>code</column>
+        <column>description</column>
+        <column>enabled</column>
+        <column>name</column>
+        <column>sortNo</column>
+        <column>updateDate</column>
+        <column>updateUser_id</column>
+        <column>version</column>
+    <row>
+        <value description="id">-1</value>
+        <value description="code">PM</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">项目管理</value>
+        <value description="sortNo">1</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-2</value>
+        <value description="code">IV</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">项目调查</value>
+        <value description="sortNo">2</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-3</value>
+        <value description="code">RD</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">需求定义</value>
+        <value description="sortNo">3</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-4</value>
+        <value description="code">BD</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">基本设计</value>
+        <value description="sortNo">4</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-5</value>
+        <value description="code">FD</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">功能设计</value>
+        <value description="sortNo">5</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-6</value>
+        <value description="code">DD</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">详细设计</value>
+        <value description="sortNo">6</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-7</value>
+        <value description="code">CD</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">代码</value>
+        <value description="sortNo">7</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-8</value>
+        <value description="code">UT</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">单体设计</value>
+        <value description="sortNo">8</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-9</value>
+        <value description="code">IT</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">结合测试</value>
+        <value description="sortNo">9</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-10</value>
+        <value description="code">ST</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">系统测试</value>
+        <value description="sortNo">10</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-11</value>
+        <value description="code">DT</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">交付测试</value>
+        <value description="sortNo">11</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    <row>
+        <value description="id">-12</value>
+        <value description="code">OT</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">其他</value>
+        <value description="sortNo">12</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+    </row>
+    </table>
+    <!--XdpProcess-END-->
+    <!--XdpGroupDocType-START-->
+    <table name="XdpGroupDocType">
+        <column>id</column>
+        <column>description</column>
+        <column>docNum</column>
+        <column>enabled</column>
+        <column>name</column>
+        <column>ruleFile</column>
+        <column>ruleFilePath</column>
+        <column>maxMgr</column>
+        <column>ruleName</column>
+        <column>sortNo</column>
+        <column>templateFile</column>
+        <column>templateFilePath</column>
+        <column>templateName</column>
+        <column>updateDate</column>
+        <column>updateUser_id</column>
+        <column>version</column>
+        <column>xdpGroup_id</column>
+        <column>xdpProcess_id</column>
+    <row>
+        <value description="id">-1</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">项目开发计划书</value>
+        <value description="ruleFile">PR_ProjectManagement.pdf</value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">1</value>
+        <value description="ruleName">项目管理</value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">PM_ProjectName_Plan.ppt</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">项目开发计划书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-2</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">进度表</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">2</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile">PM_ProjectName_Schedule.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">进度表</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-3</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">项目报告</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">3</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">3</value>
+        <value description="templateFile">PM_ProjectName_Report.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">项目报告</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-4</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">项目会议记录</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">4</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">4</value>
+        <value description="templateFile">PM_ProjectName_MeetingRecord.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">项目会议记录</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-5</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">项目总结报告</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">5</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">5</value>
+        <value description="templateFile">PM_ProjectName_Summary.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">项目总结报告</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-6</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">客户输入文档</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">6</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile"></value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-2</value>
+    </row>
+    <row>
+        <value description="id">-7</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">调查报告</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">7</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile">IV_ProjectName_Report.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">调查报告</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-2</value>
+    </row>
+    <row>
+        <value description="id">-8</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">需求定义书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">8</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">RD_ProjectName_Spec.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">需求定义书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-3</value>
+    </row>
+    <row>
+        <value description="id">-9</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">变更联络票</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">9</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile">RD_ProjectName_Change.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">变更联络票</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-3</value>
+    </row>
+    <row>
+        <value description="id">-10</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">基本式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">10</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">BD_ProjectName_Spec.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">基本式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-4</value>
+    </row>
+    <row>
+        <value description="id">-11</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">功能式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">11</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">FD_ProjectName_Spec.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">功能式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-5</value>
+    </row>
+    <row>
+        <value description="id">-12</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">详细式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">12</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">DD_ProjectName_Spec.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">详细式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-6</value>
+    </row>
+    <row>
+        <value description="id">-13</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">代码规则</value>
+        <value description="ruleFile">CD_Rule.doc</value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">13</value>
+        <value description="ruleName">代码规则</value>
+        <value description="sortNo">1</value>
+        <value description="templateFile"></value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-7</value>
+    </row>
+    <row>
+        <value description="id">-14</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">单体测试式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">14</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">UT_ProjectName_Spec.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">单体测试式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-8</value>
+    </row>
+    <row>
+        <value description="id">-15</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">单体测试报告书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">15</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-8</value>
+    </row>
+    <row>
+        <value description="id">-16</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">结合测试式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">16</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">IT_ProjectName_Spec.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">结合测试式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-9</value>
+    </row>
+    <row>
+        <value description="id">-17</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">结合测试报告书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">17</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-9</value>
+    </row>
+    <row>
+        <value description="id">-18</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">系统测试式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">18</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">ST_ProjectName_Spec.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">系统测试式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-10</value>
+    </row>
+    <row>
+        <value description="id">-19</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">系统测试报告书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">19</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-10</value>
+    </row>
+    <row>
+        <value description="id">-20</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">交付测试式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">20</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">DT_ProjectName_Spec.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">交付测试式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-11</value>
+    </row>
+    <row>
+        <value description="id">-21</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">培训</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">21</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-11</value>
+    </row>
+    <row>
+        <value description="id">-22</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">课题联络票</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">22</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">OT_ProjectName_QAList.xls</value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName">课题联络票</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-12</value>
+    </row>
+     <row>
+        <value description="id">-23</value>
+        <value description="description"></value>
+        <value description="docNum">1</value>
+        <value description="enabled">1</value>
+        <value description="name">其他文档</value>
+        <value description="ruleFile"></value>
+        <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+        <value description="maxMgr">23</value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpGroup_id">-1</value>
+        <value description="xdpProcess_id">-12</value>
+    </row>
+    <row>
+    <value description="id">-24</value>
+    <value description="description"></value>
+    <value description="docNum">1</value>
+    <value description="enabled">1</value>
+    <value description="name">项目开发计划书</value>
+    <value description="ruleFile">PM_ProjectManagement.pdf</value>
+    <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+    <value description="maxMgr">24</value>
+    <value description="ruleName">项目管理</value>
+    <value description="sortNo">1</value>
+    <value description="templateFile">PM_ProjectName_Plan.ppt</value>
+    <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+    <value description="templateName">项目开发计划书</value>
+    <value description="updateDate">2013-09-25</value>
+    <value description="updateUser_id">-1</value>
+    <value description="version">1</value>
+    <value description="xdpGroup_id">-2</value>
+    <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+    <value description="id">-25</value>
+    <value description="description"></value>
+    <value description="docNum">1</value>
+    <value description="enabled">1</value>
+    <value description="name">项目开发计划书</value>
+    <value description="ruleFile">PM_ProjectManagement.pdf</value>
+    <value description="ruleFilePath">c:\xdp\TRN\standard\PM\</value>
+    <value description="maxMgr">25</value>
+    <value description="ruleName">项目管理</value>
+    <value description="sortNo">1</value>
+    <value description="templateFile">PM_ProjectName_Plan.ppt</value>
+    <value description="templateFilePath">c:\xdp\TRN\standard\PM2\</value>
+    <value description="templateName">项目开发计划书</value>
+    <value description="updateDate">2013-09-25</value>
+    <value description="updateUser_id">-1</value>
+    <value description="version">1</value>
+    <value description="xdpGroup_id">-3</value>
+    <value description="xdpProcess_id">-1</value>
+    </row>
+    
+    </table>
+    <!--XdpGroupDocType-END-->
+    <!--XdpGroupDoc-START-->
+    <table name="XdpGroupDoc">
+        <column>id</column>
+        <column>checkDate</column>
+        <column>checkUser</column>
+        <column>createDate</column>
+        <column>createUser</column>
+        <column>description</column>
+        <column>docFile</column>
+        <column>docName</column>
+        <column>enabled</column>
+        <column>mgrNo</column>
+        <column>name</column>
+        <column>updateDate</column>
+        <column>updateUser</column>
+        <column>ver</column>
+        <column>version</column>
+        <column>xdpGroupDocType_id</column>
+    <row>
+        <value description="id">-1</value>
+        <value description="checkDate">2013-09-25</value>
+        <value description="checkUser">wmc</value>
+        <value description="createDate">2013-09-25</value>
+        <value description="createUser">wmc</value>
+        <value description="description"></value>
+        <value description="docFile">系统路径+项目组简称+工程阶段简称+文件名</value>
+        <value description="docName">上载的文件原名包括扩展</value>
+        <value description="enabled">1</value>
+        <value description="mgrNo">TRN00001</value>
+        <value description="name">文档名称</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser">WMC</value>
+        <value description="ver">1000000000</value>
+        <value description="version">1</value>
+        <value description="xdpGroupDocType_id">-1</value>
+    </row>
+    </table>
+    <!--XdpGroupDoc-END-->
+    <!--XdpDocType-START-->
+    <table name="XdpDocType">
+        <column>id</column>
+        <column>description</column>
+        <column>enabled</column>
+        <column>name</column>
+        <column>ruleFile</column>
+        <column>ruleName</column>
+        <column>sortNo</column>
+        <column>templateFile</column>
+        <column>templateName</column>
+        <column>updateDate</column>
+        <column>updateUser_id</column>
+        <column>version</column>
+        <column>xdpProcess_id</column>
+    <row>
+        <value description="id">-1</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">项目开发计划书</value>
+        <value description="ruleFile">/standard/PM_ProjectManagement.pdf</value>
+        <value description="ruleName">项目管理</value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/PM_ProjectName_Plan.ppt</value>
+        <value description="templateName">项目开发计划书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-2</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">项目进度表</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile">/standard/PM_ProjectName_Schedule.xls</value>
+        <value description="templateName">进度表</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-3</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">项目报告</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">3</value>
+        <value description="templateFile">/standard/PM_ProjectName_Report.xls</value>
+        <value description="templateName">项目报告</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-4</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">项目会议记录</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">4</value>
+        <value description="templateFile">/standard/PM_ProjectName_MeetingRecord.xls</value>
+        <value description="templateName">项目会议记录</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-5</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">项目总结报告</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">5</value>
+        <value description="templateFile">/standard/PM_ProjectName_Summary.xls</value>
+        <value description="templateName">项目总结报告</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-1</value>
+    </row>
+    <row>
+        <value description="id">-6</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">客户输入文档</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile"></value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-2</value>
+    </row>
+    <row>
+        <value description="id">-7</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">调查报告</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile">/standard/IV_ProjectName_Report.xls</value>
+        <value description="templateName">调查报告</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-2</value>
+    </row>
+    <row>
+        <value description="id">-8</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">需求定义书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/RD_ProjectName_Spec.xls</value>
+        <value description="templateName">需求定义书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-3</value>
+    </row>
+    <row>
+        <value description="id">-9</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">变更联络票</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile">/standard/RD_ProjectName_Change.xls</value>
+        <value description="templateName">变更联络票</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-3</value>
+    </row>
+    <row>
+        <value description="id">-10</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">基本式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/BD_ProjectName_Spec.xls</value>
+        <value description="templateName">基本式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-4</value>
+    </row>
+    <row>
+        <value description="id">-11</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">功能式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/FD_ProjectName_Spec.xls</value>
+        <value description="templateName">功能式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-5</value>
+    </row>
+    <row>
+        <value description="id">-12</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">详细式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/DD_ProjectName_Spec.xls</value>
+        <value description="templateName">详细式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-6</value>
+    </row>
+    <row>
+        <value description="id">-13</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">代码</value>
+        <value description="ruleFile">/standard/CD_Rule.doc</value>
+        <value description="ruleName">代码规则</value>
+        <value description="sortNo">1</value>
+        <value description="templateFile"></value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-7</value>
+    </row>
+    <row>
+        <value description="id">-14</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">单体测试式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/UT_ProjectName_Spec.xls</value>
+        <value description="templateName">单体测试式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-8</value>
+    </row>
+    <row>
+        <value description="id">-15</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">单体测试报告书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-8</value>
+    </row>
+    <row>
+        <value description="id">-16</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">结合测试式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/IT_ProjectName_Spec.xls</value>
+        <value description="templateName">结合测试式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-9</value>
+    </row>
+    <row>
+        <value description="id">-17</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">结合测试报告书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-9</value>
+    </row>
+    <row>
+        <value description="id">-18</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">系统测试式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/ST_ProjectName_Spec.xls</value>
+        <value description="templateName">系统测试式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-10</value>
+    </row>
+    <row>
+        <value description="id">-19</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">系统测试报告书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-10</value>
+    </row>
+    <row>
+        <value description="id">-20</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">交付测试式样书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/DT_ProjectName_Spec.xls</value>
+        <value description="templateName">交付测试式样书</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-11</value>
+    </row>
+    <row>
+        <value description="id">-21</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">交付测试报告书</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-10</value>
+    </row>
+    <row>
+        <value description="id">-22</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">课题联络票</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">1</value>
+        <value description="templateFile">/standard/OT_ProjectName_QAList.xls</value>
+        <value description="templateName">课题联络票</value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-12</value>
+    </row>
+    <row>
+        <value description="id">-23</value>
+        <value description="description"></value>
+        <value description="enabled">1</value>
+        <value description="name">其他文档</value>
+        <value description="ruleFile"></value>
+        <value description="ruleName"></value>
+        <value description="sortNo">2</value>
+        <value description="templateFile"></value>
+        <value description="templateName"></value>
+        <value description="updateDate">2013-09-25</value>
+        <value description="updateUser_id">-1</value>
+        <value description="version">1</value>
+        <value description="xdpProcess_id">-12</value>
+    </row>
+    </table>
+    <!--XdpDocType-END-->
+</dataset>
+
+
+
+
+
+

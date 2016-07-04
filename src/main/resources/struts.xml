@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Constants -->
+    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <constant name="struts.action.extension" value="action,"/>
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.custom.i18n.resources" value="ApplicationResources,errors"/>
+    <constant name="struts.multipart.maxSize" value="2097152"/>
+    <constant name="struts.ui.theme" value="css_xhtml"/>
+    <constant name="struts.codebehind.pathPrefix" value="/WEB-INF/pages/"/>
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <constant name="struts.convention.action.disableScanning" value="true"/>
+    <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
+
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+        <interceptors>
+            <!-- Interceptor to handle allowing only admins to certain actions -->
+            <interceptor name="adminOnly" class="adminInterceptor"/>
+            <!-- Interceptor to handle accessDenied exceptions thrown from service/model layer called from within actions -->
+            <interceptor name="accessDenied" class="accessDeniedInterceptor"/>
+            <!-- Copied from struts-default.xml and changed validation exclude methods -->
+            <interceptor-stack name="defaultStack">
+                <interceptor-ref name="accessDenied"/>
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="profiling"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="params">
+                    <param name="excludeParams">dojo\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">cancel,execute,delete,edit,list</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+            </interceptor-stack>
+            <interceptor-stack name="fileUploadStack">
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+            <interceptor-stack name="adminCheck">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="adminOnly"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <global-results>
+            <result name="mainMenu" type="redirectAction">mainMenu</result>
+            <result name="dataAccessFailure">/WEB-INF/pages/dataAccessFailure.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="org.springframework.dao.DataAccessException" result="dataAccessFailure"/>
+        </global-exception-mappings>
+
+        <action name="mainMenu">
+            <result name="success">/WEB-INF/pages/mainMenu.jsp</result>
+        </action>
+
+        <action name="signup">
+            <result>/WEB-INF/pages/signup.jsp</result>
+        </action>
+
+        <action name="saveSignup" class="signupAction" method="save">
+            <result name="cancel" type="redirect">/</result>
+            <result name="input">/WEB-INF/pages/signup.jsp</result>
+            <result name="success" type="redirectAction">mainMenu</result>
+        </action>
+
+        <action name="editUser" class="userAction" method="edit">
+            <interceptor-ref name="adminCheck"/>
+            <result name="success">/WEB-INF/pages/userForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/userList.jsp</result>
+        </action>
+
+        <action name="editProfile" class="userAction" method="edit">
+            <result name="success">/WEB-INF/pages/userForm.jsp</result>
+            <result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+        </action>
+
+        <action name="saveUser" class="userAction" method="save">
+            <result name="cancel" type="redirectAction">admin/users</result>
+            <result name="input">/WEB-INF/pages/userForm.jsp</result>
+            <result name="success" type="redirectAction">admin/users</result>
+        </action>
+
+        <action name="uploadFile" class="com.xj.webapp.action.FileUploadAction">
+            <interceptor-ref name="fileUploadStack"/>
+            <result name="input">/WEB-INF/pages/uploadForm.jsp</result>
+            <result name="success">/WEB-INF/pages/uploadDisplay.jsp</result>
+            <result name="cancel" type="redirectAction">mainMenu</result>
+        </action>
+
+        <action name="passwordHint" class="passwordHintAction">
+            <result name="input">/</result>
+            <result name="success">/</result>
+        </action>
+
+        <!--DemoAction-START-->
+        <action name="demoes" class="com.xj.webapp.action.DemoAction" method="list">
+            <result>/WEB-INF/pages/demoList.jsp</result>
+        </action>
+
+        <action name="editDemo" class="com.xj.webapp.action.DemoAction" method="edit">
+            <result>/WEB-INF/pages/demoForm.jsp</result>
+            <result name="error">/WEB-INF/pages/demoList.jsp</result>
+        </action>
+
+        <action name="saveDemo" class="com.xj.webapp.action.DemoAction" method="save">
+            <result name="input">/WEB-INF/pages/demoForm.jsp</result>
+            <result name="cancel" type="redirectAction">demoes</result>
+            <result name="delete" type="redirectAction">demoes</result>
+            <result name="success" type="redirectAction">demoes</result>
+        </action>
+        <!--DemoAction-END-->
+
+        <!--XdpGroupAction-START-->
+        <action name="xdpGroups" class="com.xj.webapp.action.XdpGroupAction" method="list">
+            <result>/WEB-INF/pages/xdpGroupList.jsp</result>
+        </action>
+
+        <action name="editXdpGroup" class="com.xj.webapp.action.XdpGroupAction" method="edit">
+            <result>/WEB-INF/pages/xdpGroupForm.jsp</result>
+            <result name="error">/WEB-INF/pages/xdpGroupList.jsp</result>
+        </action>
+
+        <action name="saveXdpGroup" class="com.xj.webapp.action.XdpGroupAction" method="save">
+            <result name="input">/WEB-INF/pages/xdpGroupForm.jsp</result>
+            <result name="cancel" type="redirectAction">xdpGroups</result>
+            <result name="delete" type="redirectAction">xdpGroups</result>
+            <result name="success" type="redirectAction">xdpGroups</result>
+        </action>
+        <!--XdpGroupAction-END-->
+
+        <!--XdpSystemAction-START-->
+        <action name="xdpSystems" class="com.xj.webapp.action.XdpSystemAction" method="list">
+            <result>/WEB-INF/pages/xdpSystemList.jsp</result>
+        </action>
+
+        <action name="editXdpSystem" class="com.xj.webapp.action.XdpSystemAction" method="edit">
+            <result>/WEB-INF/pages/xdpSystemForm.jsp</result>
+            <result name="error">/WEB-INF/pages/xdpSystemList.jsp</result>
+        </action>
+
+        <action name="saveXdpSystem" class="com.xj.webapp.action.XdpSystemAction" method="save">
+            <result name="input">/WEB-INF/pages/xdpSystemForm.jsp</result>
+            <result name="cancel" type="redirectAction">xdpSystems</result>
+            <result name="delete" type="redirectAction">xdpSystems</result>
+            <result name="success" type="redirectAction">xdpSystems</result>
+        </action>
+        <!--XdpSystemAction-END-->
+
+        <!--XdpProcessAction-START-->
+        <action name="xdpProcesses" class="com.xj.webapp.action.XdpProcessAction" method="list">
+            <result>/WEB-INF/pages/xdpProcessList.jsp</result>
+        </action>
+
+        <action name="editXdpProcess" class="com.xj.webapp.action.XdpProcessAction" method="edit">
+            <result>/WEB-INF/pages/xdpProcessForm.jsp</result>
+            <result name="error">/WEB-INF/pages/xdpProcessList.jsp</result>
+        </action>
+
+        <action name="saveXdpProcess" class="com.xj.webapp.action.XdpProcessAction" method="save">
+            <result name="input">/WEB-INF/pages/xdpProcessForm.jsp</result>
+            <result name="cancel" type="redirectAction">xdpProcesses</result>
+            <result name="delete" type="redirectAction">xdpProcesses</result>
+            <result name="success" type="redirectAction">xdpProcesses</result>
+        </action>
+        <!--XdpProcessAction-END-->
+
+        <!--XdpGroupDocTypeAction-START-->
+        <action name="xdpGroupDocTypes" class="com.xj.webapp.action.XdpGroupDocTypeAction" method="list">
+            <result>/WEB-INF/pages/xdpGroupDocTypeList.jsp</result>
+        </action>
+
+        <action name="editXdpGroupDocType" class="com.xj.webapp.action.XdpGroupDocTypeAction" method="edit">
+            <result>/WEB-INF/pages/xdpGroupDocTypeForm.jsp</result>
+            <result name="error">/WEB-INF/pages/xdpGroupDocTypeList.jsp</result>
+        </action>
+        
+        <action name="filedownload" class="com.xj.webapp.action.XdpGroupDocTypeAction" method="download">
+            <result name="success" type="stream">
+            <param name="contentType">application/octet-stream</param>
+            <param name="inputName">inputStream</param>
+            <param name="contentDisposition">attachment;filename="${ruleFile}"</param>
+            <param name="bufferSize">4096</param>
+            </result>
+        </action>
+        
+        <action name="templateFiledownload" class="com.xj.webapp.action.XdpGroupDocTypeAction" method="download2">
+            <result name="success" type="stream">
+            <param name="contentType">application/octet-stream</param>
+            <param name="inputName">inputStream2</param>
+            <param name="contentDisposition">attachment;filename="${templateFile}"</param>
+            <param name="bufferSize">4096</param>
+            </result>
+        </action>
+        
+        
+
+        <action name="saveXdpGroupDocType" class="com.xj.webapp.action.XdpGroupDocTypeAction" method="save">
+            <result name="input">/WEB-INF/pages/xdpGroupDocTypeForm.jsp</result>
+            <result name="cancel" type="redirectAction">xdpGroupDocTypes</result>
+            <result name="delete" type="redirectAction">xdpGroupDocTypes</result>
+            <result name="success" type="redirectAction">xdpGroupDocTypes</result>
+        </action>
+        <!--XdpGroupDocTypeAction-END-->
+
+        <!--XdpGroupDocAction-START-->
+        <action name="xdpGroupDocs" class="com.xj.webapp.action.XdpGroupDocAction" method="list">
+            <result>/WEB-INF/pages/xdpGroupDocList.jsp</result>
+        </action>
+
+        <action name="editXdpGroupDoc" class="com.xj.webapp.action.XdpGroupDocAction" method="edit">
+            <result>/WEB-INF/pages/xdpGroupDocForm.jsp</result>
+            <result name="error">/WEB-INF/pages/xdpGroupDocList.jsp</result>
+        </action>
+
+        <action name="saveXdpGroupDoc" class="com.xj.webapp.action.XdpGroupDocAction" method="save">
+            <result name="input">/WEB-INF/pages/xdpGroupDocForm.jsp</result>
+            <result name="cancel" type="redirectAction">xdpGroupDocs</result>
+            <result name="delete" type="redirectAction">xdpGroupDocs</result>
+            <result name="success" type="redirectAction">xdpGroupDocs</result>
+        </action>
+        <!--XdpGroupDocAction-END-->
+
+        <!--XdpDocTypeAction-START-->
+        <action name="xdpDocTypes" class="com.xj.webapp.action.XdpDocTypeAction" method="list">
+            <result>/WEB-INF/pages/xdpDocTypeList.jsp</result>
+        </action>
+
+        <action name="editXdpDocType" class="com.xj.webapp.action.XdpDocTypeAction" method="edit">
+            <result>/WEB-INF/pages/xdpDocTypeForm.jsp</result>
+            <result name="error">/WEB-INF/pages/xdpDocTypeList.jsp</result>
+        </action>
+
+        <action name="saveXdpDocType" class="com.xj.webapp.action.XdpDocTypeAction" method="save">
+            <result name="input">/WEB-INF/pages/xdpDocTypeForm.jsp</result>
+            <result name="cancel" type="redirectAction">xdpDocTypes</result>
+            <result name="delete" type="redirectAction">xdpDocTypes</result>
+            <result name="success" type="redirectAction">xdpDocTypes</result>
+        </action>
+        <!--XdpDocTypeAction-END-->
+
+        <!-- Add additional actions here -->
+    </package>
+
+    <!-- Actions in this package will be prefixed with /admin/ -->
+    <package name="admin" extends="default" namespace="/admin">
+        <action name="activeUsers" class="com.opensymphony.xwork2.ActionSupport">
+            <result name="success">/WEB-INF/pages/admin/activeUsers.jsp</result>
+        </action>
+
+        <action name="reload" class="com.xj.webapp.action.ReloadAction">
+            <interceptor-ref name="adminCheck"/>
+            <!-- this should never be used, it's here to prevent warnings -->
+            <result name="success">/WEB-INF/pages/mainMenu.jsp</result>
+        </action>
+
+        <action name="users" class="userAction" method="list">
+            <interceptor-ref name="adminCheck"/>
+            <result name="success">/WEB-INF/pages/admin/userList.jsp</result>
+        </action>
+    </package>
+</struts>
+
+<!--      Start: Added by wmc Ver0.1.0 for STRUTS2/JSON/JQUERY.
+    Actions in this package will be used by struts-json-plugin.
+    <package name="jsonAction"  extends="json-default">
+        <action name="fetchXdpGroupDocTypeAvailableXdpGroups" class="com.xj.webapp.action.XdpGroupDocTypeAction" method="fetchAvailableXdpGroups">
+            <result type="json">
+                <param name="noCache">true</param>
+                <param name="root">availableXdpGroups</param>
+            </result>
+        </action>
+    </package>    -->
